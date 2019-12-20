@@ -18,9 +18,12 @@ import { EventListener, EventComponent, Event } from 'typed-eventemitter';
 
 @EventComponent
 class OrderService {
+  lastItem: Order | undefined;
+
   @EventListener(customEventEmitter, 'ordered')
   receiveOrderEvent(item: Order) {
     console.log(`${item.name}: ${item.price}`);
+    this.lastItem = item;
   }
 }
 ```
