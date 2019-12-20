@@ -9,4 +9,5 @@ export interface EventRegisterContract {
   event: EventEmitter;
   listen: string;
   listener: string;
+  listenFunction: Function | null;
 }

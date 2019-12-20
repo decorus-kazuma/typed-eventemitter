@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "",
-    "test": "jest",
+    "test": "jest --colors --logHeapUsage",
     "test:coverage": ""
   },
   "devDependencies": {
@@ -27,13 +27,17 @@
     },
     "testRegex": "\\.test\\.ts$",
     "moduleFileExtensions": [
-      "ts",
-      "js"
+      "js",
+      "ts"
     ],
     "globals": {
       "ts-jest": {
-        "enableTsDiagnostics": true
+        "diagnostics": {
+          "warnOnly": true
+        }
       }
-    }
+    },
+    "preset": "ts-jest",
+    "testMatch": null
   }
 }

@@ -7,8 +7,13 @@ import { EventEmitter } from 'events';
  *
  * @param {EventEmitter} event Event
  * @param listen Event key
+ * @param {Function|null|undefined} listenFunction
  */
-export default function EventListener(event: EventEmitter, listen: string) {
+export default function EventListener(
+  event: EventEmitter,
+  listen: string,
+  listenFunction?: Function | null | undefined,
+) {
   return function(
     target: any,
     propertyKey: string,
@@ -27,6 +32,7 @@ export default function EventListener(event: EventEmitter, listen: string) {
       event: event,
       listen: listen,
       listener: propertyKey,
+      listenFunction: listenFunction || null,
     });
 
     Reflect.defineMetadata('events:listener', reflects, target);

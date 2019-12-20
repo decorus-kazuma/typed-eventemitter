@@ -19,9 +19,9 @@ export default function EventComponent<T extends { new (...args: any[]): {} }>(
             throw new Error('Event listener not found');
           }
 
-          item.event.on(item.listen, (...e: any[]) =>
-            self[item.listener].bind(this)(e),
-          );
+          item.event.on(item.listen, (...e: any[]) => {
+            self[item.listener].bind(this)(e);
+          });
         },
       );
     }
