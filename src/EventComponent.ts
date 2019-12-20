@@ -1,7 +1,11 @@
 import { EventRegisterContract } from './EventRegisterContract';
 import 'reflect-metadata';
-import { EventEmitter } from 'events';
 
+/**
+ * Event component (event listen reg)
+ *
+ * @param constructor
+ */
 export default function EventComponent<T extends { new (...args: any[]): {} }>(
   constructor: T,
 ) {
@@ -9,8 +13,7 @@ export default function EventComponent<T extends { new (...args: any[]): {} }>(
     constructor(...args: any[]) {
       super(args);
       const self: any = this;
-
-      Reflect.getMetadata('events:listener', this).forEach(
+      Reflect.getMetadata('events:listener', this)?.forEach(
         (item: EventRegisterContract) => {
           if (typeof self[item.listener] !== 'function') {
             throw new Error('Event listener not found');

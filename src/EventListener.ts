@@ -2,6 +2,12 @@ import { EventRegisterContract } from './EventRegisterContract';
 import 'reflect-metadata';
 import { EventEmitter } from 'events';
 
+/**
+ * Listen event
+ *
+ * @param {EventEmitter} event Event
+ * @param listen Event key
+ */
 export default function EventListener(event: EventEmitter, listen: string) {
   return function(
     target: any,
