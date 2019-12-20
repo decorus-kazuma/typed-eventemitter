@@ -1,6 +1,10 @@
-import { EventRegisterContract } from './EventRegisterContract';
 import 'reflect-metadata';
 import { EventEmitter } from 'events';
+import { EventRegisterContract } from './EventRegisterContract';
+import {
+  EventInstance as EventInstanceSymbol,
+  Listener as EventListenerSymbol,
+} from './EventEmitterSymbol';
 
 /**
  * Listen event
@@ -21,11 +25,19 @@ export default function EventListener(
   ) {
     const method = descriptor.value;
     const reflects: EventRegisterContract[] =
-      Reflect.getOwnMetadata('events:listener', target) || [];
+      Reflect.getOwnMetadata(EventListenerSymbol, target) || [];
 
-    descriptor.value = function(...args: any[]) {
-      const original = method.apply(this, args);
-      return original;
+    descriptor.value = function(eventInstance: EventEmitter, ...args: any[]) {
+      const eventInstanceParam = Reflect.getOwnMetadata(
+        EventInstanceSymbol,
+        target,
+        propertyKey,
+      );
+      if (eventInstanceParam && eventInstanceParam.length > 0) {
+        args.splice(eventInstanceParam[0], 0, eventInstance);
+      }
+
+      return method.apply(this, args);
     };
 
     reflects.push({
@@ -35,6 +47,6 @@ export default function EventListener(
       listenFunction: listenFunction || null,
     });
 
-    Reflect.defineMetadata('events:listener', reflects, target);
+    Reflect.defineMetadata(EventListenerSymbol, reflects, target);
   };
 }

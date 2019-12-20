@@ -47,3 +47,34 @@ customEventEmitter.on('ordered', {
 ```
 りんご: 200
 ```
+
+### Receive event instance
+
+```typescript
+receiver(@Event event: EventEmitter, data: any) {
+
+}
+```
+
+### Emit
+
+```typescript
+class Test {
+  @EventEmit(event, 'halo')
+  sendEvent() {
+    return 'Halo!'
+  }
+
+  @EventListener(event, 'halo)
+  receive(data: any) {
+    console.log(data);
+  }
+}
+
+const testInstance = new Test();
+testInstance.sendEvent();
+```
+
+```
+Halo!
+```
